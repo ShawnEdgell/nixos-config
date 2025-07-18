@@ -24,4 +24,3 @@ layer=overlay
 # Additional tweaks
 format=<b>%s</b>\n%b
 outer-margin=10
-inner-margin=8

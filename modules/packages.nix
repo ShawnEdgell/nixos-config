@@ -5,7 +5,7 @@
 
     ### System & CLI Utilities ###
     git
-    ffmpeg-full
+    #ffmpeg-full
     fastfetch
     brightnessctl
     gvfs
@@ -15,12 +15,12 @@
 
     ### Desktop Applications ###
     firefox
-    discord
-    spotify
+    #discord
+    #spotify
     vscode
-    obs-studio
+    #obs-studio
     gimp
-    libreoffice
+    #libreoffice
 
     ### Gaming ###
     steam
@@ -31,6 +31,7 @@
     ### Hyprland UI & Desktop Tools ###
     kitty
     mako
+    libnotify
     waybar
     wofi
     hyprlock
