@@ -1,0 +1,75 @@
+{
+  "output": "eDP-1",
+  "layer": "top",
+  "position": "top",
+  "margin-top": 8,
+  "margin-bottom": 0,
+  "margin-left": 8,
+  "margin-right": 8,
+  "spacing": 5,
+
+  "modules-left": [
+    "hyprland/workspaces",
+    "hyprland/window"
+  ],
+  "modules-center": [],
+  "modules-right": [
+    "pulseaudio#volume",
+    "network",
+    "cpu",
+    "memory",
+    "tray",
+    "clock"
+  ],
+
+  "hyprland/workspaces": {
+    "format": "{name}",
+    "all-outputs": true,
+    "display-empty": false,
+    "on-click": "activate"
+  },
+
+  "hyprland/window": {
+    "max-length": 50,
+    "tooltip": true
+  },
+
+  "pulseaudio#volume": {
+    "format": "󰕾 {volume}%",
+    "format-muted": "󰝟 Muted",
+    "format-icons": {
+      "default": ["󰖁", "󰖀", "󰕾"]
+    },
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "scroll-step": 5
+  },
+
+  "network": {
+    "format-wifi": "󰖩 {essid}",
+    "format-ethernet": "󰈀 Eth",
+    "format-disconnected": "󰖪 No Net",
+    "tooltip-format": "{ifname} {ipaddr}/{cidr}",
+    "on-click": "nm-connection-editor"
+  },
+
+  "cpu": {
+    "format": " {usage}%",
+    "tooltip": true
+  },
+
+  "memory": {
+    "format": "󰍜 {used:0.1f}G({percentage}%)",
+    "tooltip": true
+  },
+
+  "clock": {
+    "format": "󰥔 {:%I:%M %p}",
+    "tooltip": true,
+    "tooltip-format": "{:%A, %B %d, %Y}"
+  },
+
+  "tray": {
+    "icon-size": 18,
+    "spacing": 10
+  }
+}

@@ -1,0 +1,61 @@
+#waybar {
+    background-color: rgba(0, 0, 0, 0); /* No background */
+    border: none; /* No border */
+    color: #ffffff; /* Default text color */
+    font-family: "JetBrainsMono Nerd Font", "Noto Sans", sans-serif;
+    font-size: 18px; /* Adjust as needed */
+    padding: 5px; /* Padding inside the bar, around modules */
+    min-height: 40px;
+}
+
+/* General module styling */
+#waybar .module {
+    background-color: rgba(0, 0, 0, 0); /* Slightly transparent
+    background for modules */
+    border-radius: 8px; /* Rounded corners for modules */
+    padding: 4px 10px; /* Padding inside each module */
+    margin: 0 0px; /* Space between modules */
+}
+
+/* Specific module styles */
+#workspaces {
+    background-color: rgba(40, 40, 40, 0.8);
+    padding: 0 5px; /* Adjust padding for icons */
+}
+#workspaces button {
+    padding: 0 5px;
+    background-color: transparent;
+    color: #ffffff;
+    border: none;
+    border-radius: 0;
+    transition: all 0.2s ease-in-out;
+}
+#workspaces button:hover {
+    background-color: rgba(100, 100, 100, 0.5);
+}
+#workspaces button.active {
+    color: #00ff99; /* Active workspace indicator color */
+}
+#workspaces button.urgent {
+    color: #ff0000; /* Urgent workspace */
+}
+#clock {
+    background-color: rgba(50, 50, 50, 0.8);
+    font-weight: bold;
+}
+#pulseaudio#volume {
+    background-color: rgba(30, 90, 120, 0.7); /* Blueish for volume */
+}
+#network {
+    background-color: rgba(120, 30, 30, 0.7); /* Reddish for network */
+}
+#cpu {
+    background-color: rgba(60, 60, 60, 0.7);
+}
+#memory {
+    background-color: rgba(80, 80, 80, 0.7);
+}
+#tray {
+    background-color: rgba(40, 40, 40, 0.8);
+}
+

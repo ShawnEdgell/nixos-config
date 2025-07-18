@@ -1,0 +1,15 @@
+[settings]
+width = 600
+height = 400
+show_match_on_empty = true
+allow_images = true
+image_size = 24
+term = kitty
+
+[keybind]
+Escape = close
+Return = activate
+Up = move_up
+Down = move_down
+Page_Up = move_page_up
+Page_Down = move_page_down

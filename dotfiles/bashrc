@@ -1,0 +1,35 @@
+# ─────────────────────────────────────
+# Starship prompt
+eval "$(starship init bash)"
+
+# ─────────────────────────────────────
+# Load secrets (if present)
+[ -f "$HOME/.secrets" ] && source "$HOME/.secrets"
+
+# ─────────────────────────────────────
+# NixOS Configuration Shortcuts
+alias nixedit='cd /etc/nixos && code .'
+alias ns="sudo nixos-rebuild switch --flake /etc/nixos#nixos-hypr"
+alias ns-dry="sudo nixos-rebuild dry-activate --flake /etc/nixos#nixos-hypr"
+
+# ─────────────────────────────────────
+# Flake & Garbage Management
+alias flake-update="nix flake update /etc/nixos && ns"
+alias nix-clean="sudo nix-collect-garbage -d"
+alias nix-gens="sudo nix-env --list-generations --profile /nix/var/nix/profiles/system"
+alias nix-prune="sudo nix-env --delete-generations old"
+alias nix-fullclean='nix-prune && nix-clean'
+alias nix-run="nix --extra-experimental-features nix-command flakes"
+alias nix-du="sudo du -sh /nix/store/* | sort -hr | head -n 20"
+
+# ─────────────────────────────────────
+# Shell QoL
+alias sl='ls'
+alias q='exit'
+alias top='btm'
+alias neofetch='fastfetch'
+
+# ─────────────────────────────────────
+# Safer Shell Defaults
+set -o noclobber   # Prevent overwriting files with '>'
+set -o ignoreeof   # Prevent accidental Ctrl+D logouts
