@@ -14,6 +14,7 @@
   ],
   "modules-center": [],
   "modules-right": [
+    "battery",
     "pulseaudio#volume",
     "network",
     "cpu",
@@ -31,6 +32,15 @@
 
   "hyprland/window": {
     "max-length": 50,
+    "tooltip": true
+  },
+
+    "battery": {
+    "bat": "BAT0",
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-icons": ["", "", "", "", ""],
     "tooltip": true
   },
 

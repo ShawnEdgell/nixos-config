@@ -43,6 +43,11 @@
     background-color: rgba(50, 50, 50, 0.8);
     font-weight: bold;
 }
+#battery {
+  background-color: rgba(180, 120, 30, 0.7); /* Amber tone */
+  color: white;
+  font-weight: bold;
+}
 #pulseaudio#volume {
     background-color: rgba(30, 90, 120, 0.7); /* Blueish for volume */
 }
