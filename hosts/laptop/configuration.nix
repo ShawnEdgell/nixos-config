@@ -31,6 +31,13 @@
     bluez-tools   # Bluetooth utilities
   ];
 
+  # Enable tmpfs for /tmp to clear it on reboot
+  boot.tmp.useTmpfs = true;
+
+  # Enable GVFS and UDisks2 for Thunar Trash/Mount support
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
+
   # Networking
   networking = {
     hostName = "nixos-hypr";
