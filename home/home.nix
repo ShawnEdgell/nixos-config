@@ -1,4 +1,3 @@
-# ./home/home.nix
 { config, pkgs, inputs, ... }:
 
 {
@@ -7,53 +6,53 @@
   #================================================================
   home.packages = with pkgs; [
     # --- CLI & System Utilities ---
-    git
-    fastfetch
+    cliphist
     cmatrix
+    fastfetch
     gemini-cli
+    git
     starship
-    wl-clipboard # Wayland clipboard tool
-    cliphist     # Clipboard history manager
+    wl-clipboard
 
-    # --- GUI Applications ---
+    # --- Desktop Applications ---
     discord
-    spotify
     firefox
-    vscode
     gimp
+    spotify
+    vscode
     xfce.thunar
     xfce.thunar-archive-plugin
     xfce.tumbler
 
-    # --- Desktop Environment & Tooling ---
-    kitty      # Terminal
-    waybar     # Status bar
-    wofi       # Application launcher
-    mako       # Notification daemon
-    libnotify  # For sending notifications
-    hyprlock   # Screen locker
-    hyprpaper  # Wallpaper utility
-    grimblast  # Screenshot tool
-    slurp      # Screen selection tool
+    # --- Gaming ---
+    gamemode
+    gamescope
+    steam
+    steam-run
+
+    # --- GUI/Desktop Tools ---
+    grimblast
+    hyprlock
+    hyprpaper
+    kitty
+    libnotify
+    mako
+    slurp
+    waybar
+    wofi
 
     # --- Applets ---
     networkmanagerapplet
 
-    # --- Gaming ---
-    steam
-    steam-run
-    gamemode
-    gamescope
-
     # --- Fonts ---
+    nerd-fonts.jetbrains-mono
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-emoji
-    nerd-fonts.jetbrains-mono
   ];
 
   #================================================================
-  # THEME & CONFIGURATION
+  # THEMING & FONT CONFIG
   #================================================================
   gtk = {
     enable = true;
@@ -72,23 +71,63 @@
     };
   };
 
-  dconf.enable = true;
   fonts.fontconfig.enable = true;
+
+  #================================================================
+  # SYSTEM SETTINGS
+  #================================================================
+  dconf.enable = true;
 
   home.sessionVariables = {
     HYPRCURSOR_THEME = "rose-pine-hyprcursor";
     HYPRCURSOR_SIZE = "24";
   };
-  
+
   #================================================================
-  # DOTFILES
+  # SHELL CONFIG (.bash_profile and .bashrc)
   #================================================================
-  home.file.".bashrc".source = ./dotfiles/bashrc;
-  home.file.".bash_profile".source = ./dotfiles/bash_profile;
-  
+  home.file.".bash_profile".text = ''
+    # Only start Hyprland if we're on TTY1 and not already in a graphical session
+    if [[ -z $DISPLAY && $(tty) = /dev/tty1 && $- == *i* ]]; then
+      exec Hyprland
+    fi
+  '';
+
+  home.file.".bashrc".text = ''
+    # Starship prompt
+    eval "$(starship init bash)"
+
+    # Load secrets (if present)
+    [ -f "$HOME/.secrets" ] && source "$HOME/.secrets"
+
+    # NixOS Configuration Shortcuts
+    alias nixedit='cd /etc/nixos && code .'
+    alias ns="sudo nixos-rebuild switch --flake /etc/nixos#laptop"
+    alias ns-dry="sudo nixos-rebuild dry-activate --flake /etc/nixos#laptop"
+
+    # Flake & Garbage Management
+    alias flake-update="sudo nix flake update /etc/nixos && ns"
+    alias nix-clean="sudo nix-collect-garbage -d"
+    alias nix-du="sudo du -sh /nix/store/* | sort -hr | head -n 20"
+
+    # Shell QoL
+    alias sl='ls'
+    alias q='exit'
+    alias top='btm'
+    alias neofetch='fastfetch'
+
+    # Safer Shell Defaults
+    set -o noclobber  # Prevent overwriting files with '>'
+    set -o ignoreeof  # Prevent accidental Ctrl+D logouts
+  '';
+
+  #================================================================
+  # CONFIG FILES
+  #================================================================
   xdg.configFile."hypr/hyprland.conf".source = ./dotfiles/hypr/hyprland.conf;
   xdg.configFile."hypr/hyprlock.conf".source = ./dotfiles/hypr/hyprlock.conf;
   xdg.configFile."hypr/hyprpaper.conf".source = ./dotfiles/hypr/hyprpaper.conf;
+
   xdg.configFile."hypr/scripts/powermenu.sh" = {
     source = ./dotfiles/hypr/scripts/powermenu.sh;
     executable = true;
@@ -97,11 +136,20 @@
     source = ./dotfiles/hypr/scripts/wallpaper.sh;
     executable = true;
   };
+
+  xdg.configFile."kitty/kitty.conf".text = ''
+    confirm_os_window_close 0
+  '';
+
+  xdg.configFile."starship.toml".source = ./dotfiles/starship.toml;
+  xdg.configFile."mako/config".source = ./dotfiles/mako/config;
   xdg.configFile."waybar/config".source = ./dotfiles/waybar/config;
   xdg.configFile."waybar/style.css".source = ./dotfiles/waybar/style.css;
-  xdg.configFile."mako/config".source = ./dotfiles/mako/config;
   xdg.configFile."wofi/config".source = ./dotfiles/wofi/config;
   xdg.configFile."wofi/style.css".source = ./dotfiles/wofi/style.css;
 
+  #================================================================
+  # FINALIZATION
+  #================================================================
   home.stateVersion = "25.05";
 }

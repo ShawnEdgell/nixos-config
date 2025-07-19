@@ -1,4 +1,0 @@
-# Only start Hyprland if we're on TTY1 and not already in a graphical session
-if [[ -z $DISPLAY && $(tty) = /dev/tty1 && $- == *i* ]]; then
-  exec Hyprland
-fi
