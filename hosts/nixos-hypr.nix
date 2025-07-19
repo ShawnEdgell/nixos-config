@@ -7,8 +7,7 @@
     ../modules/audio.nix
     ../modules/games.nix
     ../modules/hyprland.nix
-    ../modules/packages.nix
-    ../modules/theme.nix
+    # ../modules/packages.nix # This line is now removed
     ../modules/users.nix
   ];
 
@@ -22,6 +21,16 @@
   # Locale and timezone
   time.timeZone = "America/Toronto";
   i18n.defaultLocale = "en_CA.UTF-8";
+
+  # System-level packages
+  environment.systemPackages = with pkgs; [
+    brightnessctl # Hardware control
+    gvfs          # Virtual filesystem for file managers
+    lxsession     # Provides the lxpolkit auth agent
+    polkit        # The authentication daemon itself
+    bluez         # Bluetooth daemon
+    bluez-tools   # Bluetooth utilities
+  ];
 
   # Networking
   networking = {
