@@ -16,6 +16,8 @@
     cliphist     # Clipboard history manager
 
     # --- GUI Applications ---
+    discord
+    spotify
     firefox
     vscode
     gimp
@@ -43,10 +45,7 @@
     gamemode
     gamescope
 
-    # --- Fonts & Theming ---
-    gnome-themes-extra
-    adwaita-icon-theme
-    inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
+    # --- Fonts ---
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-emoji
