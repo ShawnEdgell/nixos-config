@@ -1,4 +1,3 @@
-# ./flake.nix
 {
   description = "NixOS system config with Hyprland, rose-pine, and Home Manager";
 
@@ -16,22 +15,18 @@
     };
   };
 
-  outputs = { self, nixpkgs, hyprland, home-manager, ... }@inputs: { # Changed to use @inputs
+  outputs = { self, nixpkgs, hyprland, home-manager, ... }@inputs: {
     nixosConfigurations.nixos-hypr = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-
-      # Pass all flake inputs to NixOS modules
       specialArgs = { inherit inputs; };
 
       modules = [
-        ./hosts/nixos-hypr.nix
+        ./hosts/laptop/configuration.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.backupFileExtension = "backup";
-
-          # Pass all flake inputs to Home Manager modules
           home-manager.extraSpecialArgs = { inherit inputs; };
 
           home-manager.users.shawn = {
@@ -44,7 +39,5 @@
     nixosConfigurations.default = self.nixosConfigurations.nixos-hypr;
   };
 
-  nixConfig = {
-    experimental-features = [ "nix-command" "flakes" ];
-  };
+  nixConfig.experimental-features = [ "nix-command" "flakes" ];
 }

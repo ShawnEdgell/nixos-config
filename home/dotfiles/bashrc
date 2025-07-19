@@ -9,8 +9,8 @@ eval "$(starship init bash)"
 # ─────────────────────────────────────
 # NixOS Configuration Shortcuts
 alias nixedit='cd /etc/nixos && code .'
-alias ns="sudo nixos-rebuild switch --flake /etc/nixos#nixos-hypr"
-alias ns-dry="sudo nixos-rebuild dry-activate --flake /etc/nixos#nixos-hypr"
+alias ns="sudo nixos-rebuild switch --flake /etc/nixos#laptop"
+alias ns-dry="sudo nixos-rebuild dry-activate --flake /etc/nixos#laptop"
 
 # ─────────────────────────────────────
 # Flake & Garbage Management
