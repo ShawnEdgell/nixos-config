@@ -4,11 +4,10 @@
   # Imports (hardware + modules)
   imports = [
     ./hardware-configuration.nix
-    ../modules/audio.nix
-    ../modules/games.nix
-    ../modules/hyprland.nix
-    # ../modules/packages.nix # This line is now removed
-    ../modules/users.nix
+    ../../modules/audio.nix
+    ../../modules/games.nix
+    ../../modules/hyprland.nix
+    ../../modules/users.nix
   ];
 
   # Nix configuration
