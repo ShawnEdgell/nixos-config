@@ -20,16 +20,24 @@
     gimp
     spotify
     vscode
+    pitivi
     pavucontrol
-    xfce.thunar
-    xfce.thunar-archive-plugin
-    xfce.tumbler
+    
+    # --- Archiver Backends for Thunar Plugin ---
+    zip
+    unzip
+    p7zip
+    gzip
+    bzip2
+    unrar
 
     # --- Gaming ---
     gamemode
     gamescope
     steam
     steam-run
+    protontricks
+    runelite
 
     # --- GUI/Desktop Tools ---
     grimblast
@@ -107,7 +115,7 @@
     alias ns-dry="sudo nixos-rebuild dry-activate --flake /etc/nixos#laptop"
 
     # Flake & Garbage Management
-    alias flake-update="sudo nix flake update /etc/nixos && ns"
+    alias flake-update="cd /etc/nixos && sudo nix flake update && ns"
     alias nix-clean="sudo nix-collect-garbage -d"
     alias nix-du="sudo du -sh /nix/store/* | sort -hr | head -n 20"
 

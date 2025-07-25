@@ -49,5 +49,11 @@
   };
   services.blueman.enable = true;
 
+  programs.thunar.enable = true;
+  programs.thunar.plugins = with pkgs.xfce; [
+    thunar-archive-plugin
+    thunar-volman
+  ];
+
   system.stateVersion = "25.05";
 }
