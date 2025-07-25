@@ -20,6 +20,7 @@
     gimp
     spotify
     vscode
+    pavucontrol
     xfce.thunar
     xfce.thunar-archive-plugin
     xfce.tumbler
