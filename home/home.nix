@@ -22,6 +22,7 @@
     vscode
     pitivi
     pavucontrol
+    obs-studio
     
     # --- Archiver Backends for Thunar Plugin ---
     zip
@@ -49,7 +50,7 @@
     slurp
     waybar
     wofi
-
+ 
     # --- Applets ---
     networkmanagerapplet
 
@@ -91,6 +92,7 @@
     HYPRCURSOR_THEME = "rose-pine-hyprcursor";
     HYPRCURSOR_SIZE = "24";
   };
+
 
   #================================================================
   # SHELL CONFIG (.bash_profile and .bashrc)

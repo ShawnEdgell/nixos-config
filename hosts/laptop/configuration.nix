@@ -13,6 +13,8 @@
     experimental-features = [ "nix-command" "flakes" ];
     download-buffer-size = 33554432;
   };
+  
+  # Allow the proprietary NVIDIA driver
   nixpkgs.config.allowUnfree = true;
 
   time.timeZone = "America/Toronto";
@@ -28,6 +30,9 @@
   ];
 
   boot.tmp.useTmpfs = true;
+  
+  # Enable Kernel Mode Setting, essential for Wayland + NVIDIA
+  boot.kernelParams = [ "nvidia_drm.modeset=1" ];
 
   services.gvfs.enable = true;
   services.udisks2.enable = true;
