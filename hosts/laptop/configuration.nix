@@ -49,6 +49,21 @@
     extraPackages = with pkgs; [ vulkan-loader vulkan-tools vulkan-validation-layers ];
     extraPackages32 = with pkgs.pkgsi686Linux; [ vulkan-loader ];
   };
+  hardware.nvidia = {
+    modesetting.enable = true;
+    open = false;
+    powerManagement.enable = true;
+    # powerManagement.finegrained = true;
+    # prime = {
+      # offload.enable = true;
+      # intelBusId = "PCI:0:2:0";
+      # nvidiaBusId = "PCI:1:0:0";
+    # };
+  };
+
+  services.xserver.videoDrivers = [ "nvidia" ];
+  boot.blacklistedKernelModules = [ "nouveau" ];
+
   environment.sessionVariables = {
     # NVIDIA & Wayland Variables formerly in hyprland.conf
     LIBVA_DRIVER_NAME = "nvidia";

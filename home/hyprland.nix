@@ -39,21 +39,30 @@ in
         allow_tearing = false;
         layout = "dwindle";
       };
+
+      # CORRECTED DECORATION BLOCK
       decoration = {
         rounding = 10;
         rounding_power = 2;
         active_opacity = 1.0;
         inactive_opacity = 1.0;
-        "shadow.enabled" = true;
-        "shadow.range" = 4;
-        "shadow.render_power" = 3;
-        "shadow.color" = "rgba(1a1a1aee)";
-        "blur.enabled" = true;
-        "blur.size" = 6;
-        "blur.passes" = 3;
-        "blur.new_optimizations" = true;
-        "blur.vibrancy" = 0.1696;
+
+        shadow = {
+          enabled = true;
+          range = 4;
+          render_power = 3;
+          color = "rgba(1a1a1aee)";
+        };
+
+        blur = {
+          enabled = true;
+          size = 6;
+          passes = 3;
+          new_optimizations = true;
+          vibrancy = 0.1696;
+        };
       };
+
       animations = {
         enabled = true;
         bezier = [
