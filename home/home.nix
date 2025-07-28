@@ -1,11 +1,14 @@
 { config, pkgs, inputs, ... }:
 
 {
-  #================================================================
-  # PACKAGES
-  #================================================================
+  imports = [
+    # Import our new, dedicated hyprland configuration
+    ./hyprland.nix
+  ];
+
+  # Packages & Fonts
   home.packages = with pkgs; [
-    # --- CLI & System Utilities ---
+    # CLI & System Utilities
     cliphist
     cmatrix
     fastfetch
@@ -14,7 +17,7 @@
     starship
     wl-clipboard
 
-    # --- Desktop Applications ---
+    # Desktop Applications
     discord
     firefox
     gimp
@@ -22,9 +25,8 @@
     vscode
     pitivi
     pavucontrol
-    obs-studio
     
-    # --- Archiver Backends for Thunar Plugin ---
+    # Archiver Backends for Thunar Plugin
     zip
     unzip
     p7zip
@@ -32,15 +34,13 @@
     bzip2
     unrar
 
-    # --- Gaming ---
-    gamemode
+    # Gaming (steam & gamemode are enabled system-wide)
     gamescope
-    steam
     steam-run
     protontricks
     runelite
 
-    # --- GUI/Desktop Tools ---
+    # GUI/Desktop Tools
     grimblast
     hyprlock
     hyprpaper
@@ -50,20 +50,19 @@
     slurp
     waybar
     wofi
- 
-    # --- Applets ---
+
+    # Applets
     networkmanagerapplet
 
-    # --- Fonts ---
+    # Fonts
     nerd-fonts.jetbrains-mono
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-emoji
   ];
+  fonts.fontconfig.enable = true;
 
-  #================================================================
-  # THEMING & FONT CONFIG
-  #================================================================
+  # Theming & Appearance
   gtk = {
     enable = true;
     theme = {
@@ -81,64 +80,52 @@
     };
   };
 
-  fonts.fontconfig.enable = true;
+  # Shell, Aliases, & Environment
+  programs.bash = {
+    enable = true;
+    profileExtra = ''
+      # Start Hyprland on TTY1
+      if [[ -z $DISPLAY && $(tty) = /dev/tty1 && $- == *i* ]]; then
+        exec Hyprland
+      fi
+    '';
+    bashrcExtra = ''
+      # Load secrets (if present)
+      [ -f "$HOME/.secrets" ] && source "$HOME/.secrets"
 
-  #================================================================
-  # SYSTEM SETTINGS
-  #================================================================
-  dconf.enable = true;
+      # NixOS Configuration Shortcuts
+      alias nixedit='cd /etc/nixos && code .'
+      alias ns="sudo nixos-rebuild switch --flake /etc/nixos#laptop"
+      alias ns-dry="sudo nixos-rebuild dry-activate --flake /etc/nixos#laptop"
+
+      # Flake & Garbage Management
+      alias flake-update="cd /etc/nixos && sudo nix flake update && ns"
+      alias nix-clean="sudo nix-collect-garbage -d"
+      alias nix-du="sudo du -sh /nix/store/* | sort -hr | head -n 20"
+
+      # Shell QoL
+      alias sl='ls'
+      alias q='exit'
+      alias top='btm'
+      alias neofetch='fastfetch'
+
+      # Safer Shell Defaults
+      set -o noclobber
+      set -o ignoreeof
+    '';
+  };
+  # Enabling starship here automatically adds the init script to .bashrc
+  programs.starship.enable = true;
 
   home.sessionVariables = {
     HYPRCURSOR_THEME = "rose-pine-hyprcursor";
     HYPRCURSOR_SIZE = "24";
   };
+  dconf.enable = true;
 
-
-  #================================================================
-  # SHELL CONFIG (.bash_profile and .bashrc)
-  #================================================================
-  home.file.".bash_profile".text = ''
-    # Only start Hyprland if we're on TTY1 and not already in a graphical session
-    if [[ -z $DISPLAY && $(tty) = /dev/tty1 && $- == *i* ]]; then
-      exec Hyprland
-    fi
-  '';
-
-  home.file.".bashrc".text = ''
-    # Starship prompt
-    eval "$(starship init bash)"
-
-    # Load secrets (if present)
-    [ -f "$HOME/.secrets" ] && source "$HOME/.secrets"
-
-    # NixOS Configuration Shortcuts
-    alias nixedit='cd /etc/nixos && code .'
-    alias ns="sudo nixos-rebuild switch --flake /etc/nixos#laptop"
-    alias ns-dry="sudo nixos-rebuild dry-activate --flake /etc/nixos#laptop"
-
-    # Flake & Garbage Management
-    alias flake-update="cd /etc/nixos && sudo nix flake update && ns"
-    alias nix-clean="sudo nix-collect-garbage -d"
-    alias nix-du="sudo du -sh /nix/store/* | sort -hr | head -n 20"
-
-    # Shell QoL
-    alias sl='ls'
-    alias q='exit'
-    alias top='btm'
-    alias neofetch='fastfetch'
-
-    # Safer Shell Defaults
-    set -o noclobber  # Prevent overwriting files with '>'
-    set -o ignoreeof  # Prevent accidental Ctrl+D logouts
-  '';
-
-  #================================================================
-  # CONFIG FILES
-  #================================================================
-  xdg.configFile."hypr/hyprland.conf".source = ./dotfiles/hypr/hyprland.conf;
+  # Linked Configuration Files (Dotfiles)
   xdg.configFile."hypr/hyprlock.conf".source = ./dotfiles/hypr/hyprlock.conf;
   xdg.configFile."hypr/hyprpaper.conf".source = ./dotfiles/hypr/hyprpaper.conf;
-
   xdg.configFile."hypr/scripts/powermenu.sh" = {
     source = ./dotfiles/hypr/scripts/powermenu.sh;
     executable = true;
@@ -147,11 +134,9 @@
     source = ./dotfiles/hypr/scripts/wallpaper.sh;
     executable = true;
   };
-
   xdg.configFile."kitty/kitty.conf".text = ''
     confirm_os_window_close 0
   '';
-
   xdg.configFile."starship.toml".source = ./dotfiles/starship.toml;
   xdg.configFile."mako/config".source = ./dotfiles/mako/config;
   xdg.configFile."waybar/config".source = ./dotfiles/waybar/config;
@@ -159,8 +144,6 @@
   xdg.configFile."wofi/config".source = ./dotfiles/wofi/config;
   xdg.configFile."wofi/style.css".source = ./dotfiles/wofi/style.css;
 
-  #================================================================
-  # FINALIZATION
-  #================================================================
+  # Home Manager State
   home.stateVersion = "25.05";
 }
